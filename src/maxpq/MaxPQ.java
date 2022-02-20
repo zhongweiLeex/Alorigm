@@ -53,6 +53,26 @@ public class MaxPQ<Key extends Comparable<Key>> {
     * 参数1： int i 第i个元素
     * 残数2：int j 第j个元素
     * */
+    private void exch(int i,int j){
+        Key t = pq[i];
+        pq[i] = pq[j];
+        pq[j] = t;
+    }
+    /*
+    * 描述：由下至上的堆有序化  上浮
+    *
+    * 堆的有序化状态因为某个节点比 其父结点 更大 （堆有序化状态应该是 父结点 大小 比 左右子结点大）
+    * 参数： int k  位置k的节点
+    *
+    * */
+    private void swim(int k){
+        while(k>1 && less(k/2,k)){//   k/2 是 父结点位置   k是节点位置   如果k不是根节点  且 当前节点比其父结点大 则打破了 堆有序化规则
+            //迭代交换当前节点与其父结点位置  即上浮操作
+            exch(k/2,k);
+            k = k/2;
+        }
+    }
+
 
 
 
