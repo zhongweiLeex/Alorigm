@@ -36,8 +36,16 @@ public class MaxPQ<Key extends Comparable<Key>> {
     * 参数： Key v
     * */
     public void insert(Key v){
-        pq[++N] = v;
-        swim(N);//排序
+        pq[++N] = v;//先将元素插入到末尾
+        swim(N);// 然后从末尾位置开始swim上浮调整
+    }
+
+    public Key delMax(){
+        Key max = pq[1];//根据二叉堆的性质 从根节点处获得最大元素
+        exch(1,N--);//将最大的与最小的元素交换位置  并 在交换位置之后 将 元素个数 -1
+        pq[N+1] = null;//将原本最后的元素 置空 防止越界
+        sink(1);//自下而上的 恢复堆的有序性
+        return max;
     }
     /*
     * 描述：比较第i个元素 和 第 j个 元素的大小
@@ -69,7 +77,28 @@ public class MaxPQ<Key extends Comparable<Key>> {
         while(k>1 && less(k/2,k)){//   k/2 是 父结点位置   k是节点位置   如果k不是根节点  且 当前节点比其父结点大 则打破了 堆有序化规则
             //迭代交换当前节点与其父结点位置  即上浮操作
             exch(k/2,k);
-            k = k/2;
+            k = k/2;//持续向上调整 层数向上
+        }
+    }
+    /*
+    * 描述： 由上至下的堆有序化  下沉
+    *
+    * 如果堆有序化状态 因为 某个节点比两个子结点或是其中之一更小 打破
+    * 可以通过 将 此节点 与 节点的两个子结点中较大者交换来恢复堆
+    *
+    * 参数：int k 第k个节点
+    * */
+    private void sink(int k){
+        while(2*k <= N){//如果 k 的左子节点还没有 超过最大个数
+            int j = 2*k;//左子结点 持续向下寻找应该调整的位置  层数向下
+
+            if (j<N && less(j,j+1)){ j++; }//持续向右寻找应该调整的位置   个数向右
+
+            if (!less(k,j)){// 如果 当前节点 比 子结点大了 则停止向下寻找  找到插入位置了
+                break;
+            }
+            exch(k,j);//将当前节点与子结点较小的节点交换
+            k = j;
         }
     }
 
