@@ -40,6 +40,9 @@ public class MaxPQ<Key extends Comparable<Key>> {
         swim(N);// 然后从末尾位置开始swim上浮调整
     }
 
+    /*
+    * 二叉堆（最大堆）删除最大元素
+    * */
     public Key delMax(){
         Key max = pq[1];//根据二叉堆的性质 从根节点处获得最大元素
         exch(1,N--);//将最大的与最小的元素交换位置  并 在交换位置之后 将 元素个数 -1
