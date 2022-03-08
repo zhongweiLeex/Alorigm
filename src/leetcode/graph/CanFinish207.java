@@ -51,6 +51,12 @@ public class CanFinish207 {
     * 遍历图 （邻接表方法）
     * */
     private void traverse(List<Integer>[] graph,int s){
+        /*
+        * visited 记录哪些节点被遍历过，
+        * 而 onPath 记录当前递归堆栈中有哪些节点，它们的作用不同，所以并不重复。
+        * */
+
+
         if (onPath[s]){//发现现在的这个节点  已经在路径中了
             hasCycle = true;
         }

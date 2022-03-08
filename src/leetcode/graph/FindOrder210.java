@@ -22,7 +22,7 @@ import java.util.*;
 public class FindOrder210 {
     boolean[] visited;
     boolean[] onPath;
-    boolean hasCycle = false;
+    boolean hasCycle = false;//判断是否存在环的标志位
     List<Integer> postOrder = new ArrayList<>();//记录后序遍历结果
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
@@ -34,19 +34,21 @@ public class FindOrder210 {
         for (int i = 0; i < numCourses; i++) {
             traverse(graph,i);
         }
+        //有环图 无法进行拓扑排序
         if (hasCycle){
-            return new int[]{};//存在环 的图无法拓扑排序
+            return new int[]{};//存在环 的图无法拓扑排序 直接返回 空数组
         }
         int[] result = new int[numCourses];
 
         //逆后序遍历结果就是拓扑排序结果
-        Collections.reverse(postOrder);
+        Collections.reverse(postOrder);//逆转后序遍历的数组
         for (int i = 0; i < numCourses; i++) {
             result[i] = postOrder.get(i);
         }
         return result;
 
     }
+
     /*
     * 根据给出的构建图
     * */
@@ -65,6 +67,10 @@ public class FindOrder210 {
         return graph;
     }
 
+
+    /*
+    * 深度优先遍历
+    * */
     private void traverse(List<Integer>[] graph,int s){
         if (onPath[s]){//如果当前节点之前就已经加入到 路劲中  则直接存在环
             hasCycle = true;
