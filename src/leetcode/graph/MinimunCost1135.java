@@ -6,13 +6,16 @@ public class MinimunCost1135 {
     int count;
     int[] parent;
     public int minimunCost(int n,int[][] connections){
-        count = n+1;
+        count = n+1;//从1 开始的
         parent = new int[n+1];
         int minCost = -1;
-        for (int i = 1; i <= n; i++) {
+        for (int i = 1; i <= n; i++) {//初始化并查集中的 联通分量
             parent[i] = i;
         }
+        //排序 将权重排序  从小到大顺序排序
+        //使用了贪心算法  每次选择的就是当前序列中最小的权重  来满足 权重之和尽可能小
         Arrays.sort(connections,(a,b)->(a[2]- b[2]));//使用 comparable 比较接口
+
         for(int[] edge:connections){
             if (isConnected(edge[0],edge[1])){
                 continue;
