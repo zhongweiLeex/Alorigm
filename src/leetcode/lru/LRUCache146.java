@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 public class LRUCache146 {
     //hash链表
     LinkedHashMap<Integer,Integer> cache = new LinkedHashMap<>();
+
     private int capacity;
 
     public LRUCache146(int capacity) {
